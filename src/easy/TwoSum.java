@@ -18,7 +18,7 @@ import java.util.Map;
 public class TwoSum {
     public static void main(String[] args) {
         int[] nums = {2, 7, 11, 15};
-        System.out.println(Arrays.toString(twoSum2(nums, 18)));
+        System.out.println(Arrays.toString(twoSum3(nums, 9)));
     }
 
     /**
@@ -58,5 +58,21 @@ public class TwoSum {
         }
         throw new IllegalArgumentException("没有这两个数");
     }
-
+    /**
+     * 一遍哈希表
+     * 思路：
+     *  对于上方思路来说其实可以循环一遍即可搞定
+     *  如果发现匹配即可迅速直接换回，不需要全部放入在查询
+     */
+    private static int[] twoSum3(int[] nums, int target) {
+        Map<Integer, Integer> hash = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            int diff = target - nums[i];
+            if (hash.containsKey(diff)&&hash.get(diff)!=i) {
+                return new int[]{i, hash.get(diff)};
+            }
+            hash.put(nums[i], i);
+        }
+        throw new IllegalArgumentException("没有这两个数");
+    }
 }
