@@ -1,6 +1,8 @@
 package easy;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 给定一个整数数组 nums 和一个目标值target ，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。
@@ -16,7 +18,7 @@ import java.util.Arrays;
 public class TwoSum {
     public static void main(String[] args) {
         int[] nums = {2, 7, 11, 15};
-        System.out.println(Arrays.toString(twoSum(nums, 9)));
+        System.out.println(Arrays.toString(twoSum2(nums, 18)));
     }
 
     /**
@@ -35,4 +37,26 @@ public class TwoSum {
         }
         throw new IllegalArgumentException("没有这两个数");
     }
+
+    /**
+     * 两遍哈希表
+     * 思路：
+     * 将nums数组 转换成hash 使用角标作为key 值作为value
+     * 第一遍循环放入hash中
+     * 第二遍循环放入匹配差值是否在hash中含有，如果有就完事
+     */
+    private static int[] twoSum2(int[] nums, int target) {
+        Map<Integer, Integer> hash = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            hash.put(nums[i], i);
+        }
+        for (int i = 0; i <nums.length; i++) {
+            int diff = target - nums[i];
+            if (hash.containsKey(diff)&&hash.get(diff)!=i) {
+                return new int[]{i, hash.get(diff)};
+            }
+        }
+        throw new IllegalArgumentException("没有这两个数");
+    }
+
 }
